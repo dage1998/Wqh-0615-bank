@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.dao.BankDaoMapper">
+    
+    <resultMap id="resultBank" type="com.qf.domain.Bank">
+        <id property="id" column="id"/>
+        <result column="card" property="card"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="balance" column="balance"/>
+       <association property="record" resultMap="resultRecord"/>
+    </resultMap>
+    <resultMap id="resultRecord" type="com.qf.domain.Record">
+        <id property="id" column="id"/>
+        <result property="date" column="date"/>
+        <result property="expend" column="expend"/>
+        <result property="deposit" column="deposit"/>
+        <result property="type" column="type"/>
+        <result property="backid" column="backid"/>
+
+    </resultMap>
+
+    <select id="loginIn" parameterType="java.lang.String" resultType="com.qf.domain.Bank">
+          SELECT  * FROM  bank where  card = #{card}
+    </select>
+    
+    <select id="selectBalance" parameterType="java.lang.Integer" resultMap="resultBank">
+      select  * from bank where id = #{id}
+    </select>
+
+
+  <!--  <update id="addtransfer" parameterType="com.qf.domain.Bank">
+        UPDATE  record  r  set   expend =#{record.expend}  WHERE backid = bank.id  AND bank.card = #{card}
+
+
+    </update>
+
+    <update id="jiantransfer" parameterType="com.qf.domain.Bank">
+
+
+    </update>-->
+<!--
+    <select id="selectbank" parameterType="java.lang.String" resultType="com.qf.domain.Bank">
+          SELECT  * FROM  bank where  card = #{card}
+    </select>-->
+
+
+    <update id="updatePassword" parameterType="java.lang.String">
+        UPDATE  bank set password=#{password} WHERE card = #{card}
+    </update>
+</mapper>
